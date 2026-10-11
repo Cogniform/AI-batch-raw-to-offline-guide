@@ -27,6 +27,7 @@
 - output/ 被 .gitignore 排除，clone 后需先跑生成器
 - Windows 控制台中文乱码不影响校验结果
 - data/ 是运行真相，src/ 只是素材参考
+- `tools/screenshot` 的 Dependabot 告警基本提不了 PR：extract-zip（GHSA-7pqw-9j4j-h8q3 / GHSA-jmr9-qjv8-65gv，high）上游无修复版（npm latest 仍是 2.0.1，advisory `first_patched_version: null`）；basic-ftp 有 6.2.1 但它是 `puppeteer→get-uri→basic-ftp@^5.0.2` 的传递依赖，升级路径会降 puppeteer 大版本，Dependabot 拒开 PR 且更新任务报 failure。这两条会长期挂着，除非上游/puppeteer 变化，**重复见到别再排查**。
 
 ## 文档地图
 - 用户教程 → [docs/usage.md](docs/usage.md)

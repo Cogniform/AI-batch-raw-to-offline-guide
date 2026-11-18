@@ -29,7 +29,8 @@
 - Windows 控制台中文乱码不影响校验结果
 - data/ 是运行真相，src/ 只是素材参考
 - **改依赖后必查 uv.lock 的 registry**：本机全局 `%APPDATA%\uv\uv.toml` 配了清华镜像，会让 `uv lock` 把锁文件整片改写成镜像源（2026-09-27 d9c38de 就这么中招）。pyproject 已用 `[[tool.uv.index]]` 钉死官方源，改完仍要确认 `uv.lock` 里没有 `tsinghua` 字样，否则境外 CI 会 tcp 超时。细节见 [.agents/notes/2026-11-18-uv-lock-mirror-repoisoning.md](.agents/notes/2026-11-18-uv-lock-mirror-repoisoning.md)
-- `tools/screenshot` 的 Dependabot 告警基本提不了 PR：extract-zip（GHSA-7pqw-9j4j-h8q3 / GHSA-jmr9-qjv8-65gv，high）上游无修复版（npm latest 仍是 2.0.1，advisory `first_patched_version: null`）；basic-ftp 有 6.2.1 但它是 `puppeteer→get-uri→basic-ftp@^5.0.2` 的传递依赖，升级路径会降 puppeteer 大版本，Dependabot 拒开 PR 且更新任务报 failure。这两条会长期挂着，除非上游/puppeteer 变化，**重复见到别再排查**。
+- ~~`tools/screenshot` 的 Dependabot 告警提不了 PR（extract-zip / basic-ftp 上游无修复版）~~ **2026-11-18 已解除**：puppeteer 24→25 后 `@puppeteer/browsers` 3.x 改用 `modern-tar`，依赖树里 `extract-zip`、`basic-ftp`、`ip-address` 全部消失，`npm audit` 报 0 vulnerabilities。**不要再按旧结论跳过这两个告警**。
+- `tools/screenshot` 现在要求 **Node >= 22.12.0**（puppeteer 25 是纯 ESM 包，`require()` 加载 ESM 需要 22.12+）。升级 Node 前先确认这一点，否则截图脚本会报模块加载错误。真机已验证：Node 24.18 下 `require('puppeteer')` 正常、截图产物正常（2.2 MB PNG），`headless: 'new'` 仍可用。
 
 ## 文档地图
 - 用户教程 → [docs/usage.md](docs/usage.md)

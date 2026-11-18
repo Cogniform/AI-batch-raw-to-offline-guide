@@ -18,15 +18,17 @@
 - uv run ruff check . — Lint（ruff 默认规则集，列宽默认 88）
 - uv run ruff format . — 格式化（`--check` 只看不改）
 
-## 验证快照（2026-09-27 实际跑过）
+## 验证快照（2026-11-18 复跑）
 - schema_validator: PASS（唯一ID 311 / 有效引用 779 / 双向链接 234）
 - pytest: 2 passed / 0 failed
 - Ruff: `check` 0 发现；`format --check` 全绿（全量格式化已落地）
+- uv.lock registry: 11 个包全部 `https://pypi.org/simple`，无镜像残留
 
 ## 活跃坑
 - output/ 被 .gitignore 排除，clone 后需先跑生成器
 - Windows 控制台中文乱码不影响校验结果
 - data/ 是运行真相，src/ 只是素材参考
+- **改依赖后必查 uv.lock 的 registry**：本机全局 `%APPDATA%\uv\uv.toml` 配了清华镜像，会让 `uv lock` 把锁文件整片改写成镜像源（2026-09-27 d9c38de 就这么中招）。pyproject 已用 `[[tool.uv.index]]` 钉死官方源，改完仍要确认 `uv.lock` 里没有 `tsinghua` 字样，否则境外 CI 会 tcp 超时。细节见 [.agents/notes/2026-11-18-uv-lock-mirror-repoisoning.md](.agents/notes/2026-11-18-uv-lock-mirror-repoisoning.md)
 - `tools/screenshot` 的 Dependabot 告警基本提不了 PR：extract-zip（GHSA-7pqw-9j4j-h8q3 / GHSA-jmr9-qjv8-65gv，high）上游无修复版（npm latest 仍是 2.0.1，advisory `first_patched_version: null`）；basic-ftp 有 6.2.1 但它是 `puppeteer→get-uri→basic-ftp@^5.0.2` 的传递依赖，升级路径会降 puppeteer 大版本，Dependabot 拒开 PR 且更新任务报 failure。这两条会长期挂着，除非上游/puppeteer 变化，**重复见到别再排查**。
 
 ## 文档地图

@@ -4,7 +4,7 @@
 
 > **一句话介绍：** 把碎片化的非结构化素材（笔记、截图、口述）丢给 AI，自动炼制成一个可交互的离线 HTML 攻略页面——无需联网、无需服务器、打开即用。
 
-**在线预览：** [https://cogniform.github.io/AI-batch-raw-to-offline-guide/](https://zlzayn.github.io/AI-batch-raw-to-offline-guide/)
+**在线预览：** [https://cogniform.github.io/AI-batch-raw-to-offline-guide/](https://cogniform.github.io/AI-batch-raw-to-offline-guide/)
 
 ![项目预览](preview-hd.png)
 
@@ -173,6 +173,6 @@ AI-batch-raw-to-offline-guide/
 
 ## 贡献
 
-- 本仓为个人项目；问题与建议请走 [Issues](https://github.com/zlZayn/AI-batch-raw-to-offline-guide/issues)。
+- 本仓为个人项目；问题与建议请走 [Issues](https://github.com/Cogniform/AI-batch-raw-to-offline-guide/issues)。
 
 维护者文档地图 → 见 [AGENTS.md](AGENTS.md)。
